@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# In-memory storage for events, a little update 5
+# In-memory storage for events, a little update 6
 events = []
 
 # Endpoint to insert a new event
