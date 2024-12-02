@@ -1,1 +1,6 @@
 venv/
+.idea/
+eb-deploy.txt
+login-to-ecr.txt
+task-definition.json
+
