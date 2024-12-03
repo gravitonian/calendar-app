@@ -17,5 +17,6 @@ def test_list_events(client):
     
     response = client.get('/events')
     assert response.status_code == 200
-    assert len(response.get_json()) > 0
-    assert response.get_json()[0]["name"] == "Meeting"
+    assert b'<title>Calendar Events</title>' in response.data
+    assert b'<h1>Calendar Events</h1>' in response.data
+    assert b'Meeting' in response.data
