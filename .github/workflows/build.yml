@@ -1,4 +1,4 @@
-name: Build, Test, and Push Docker Image to ECR
+name: Build, Test, Push Docker Image to ECR, and Deploy to ECS
 
 on:
   push:
@@ -47,3 +47,11 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG /home/runner/work/calendar-app/calendar-app
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Deploy to ECS
+      env:
+        CLUSTER_NAME: calendar-app
+        SERVICE_NAME: calendar-app-service
+        IMAGE_URI: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-west-2.amazonaws.com/calendar-app:latest
+      run: |
+        aws ecs update-service --cluster $CLUSTER_NAME --service $SERVICE_NAME --force-new-deployment --region us-west-2
